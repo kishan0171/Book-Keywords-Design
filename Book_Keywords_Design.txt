@@ -1,0 +1,1962 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <title>ALGORITHM COURSE</title>
+
+  <style type="text/css">
+ul.LinkedList { display: block; }
+/* ul.LinkedList ul { display: none; } */
+.HandCursorStyle { cursor: pointer; cursor: hand; }  /* For IE */
+  </style>
+
+  <script type="text/JavaScript">
+    // Add this to the onload event of the BODY element
+    function addEvents() {
+      activateTree(document.getElementById("LinkedList1"));
+    }
+
+    // This function traverses the list and add links 
+    // to nested list items
+    function activateTree(oList) {
+      // Collapse the tree
+      for (var i=0; i < oList.getElementsByTagName("ul").length; i++) {
+        oList.getElementsByTagName("ul")[i].style.display="none";            
+      }                                                                  
+      // Add the click-event handler to the list items
+      if (oList.addEventListener) {
+        oList.addEventListener("click", toggleBranch, false);
+      } else if (oList.attachEvent) { // For IE
+        oList.attachEvent("onclick", toggleBranch);
+      }
+      // Make the nested items look like links
+      addLinksToBranches(oList);
+    }
+
+    // This is the click-event handler
+    function toggleBranch(event) {
+      var oBranch, cSubBranches;
+      if (event.target) {
+        oBranch = event.target;
+      } else if (event.srcElement) { // For IE
+        oBranch = event.srcElement;
+      }
+      cSubBranches = oBranch.getElementsByTagName("ul");
+      if (cSubBranches.length > 0) {
+        if (cSubBranches[0].style.display == "block") {
+          cSubBranches[0].style.display = "none";
+        } else {
+          cSubBranches[0].style.display = "block";
+        }
+      }
+    }
+
+    // This function makes nested list items look like links
+    function addLinksToBranches(oList) {
+      var cBranches = oList.getElementsByTagName("li");
+      var i, n, cSubBranches;
+      if (cBranches.length > 0) {
+        for (i=0, n = cBranches.length; i < n; i++) {
+          cSubBranches = cBranches[i].getElementsByTagName("ul");
+          if (cSubBranches.length > 0) {
+            addLinksToBranches(cSubBranches[0]);
+            cBranches[i].className = "HandCursorStyle";
+            cBranches[i].style.color = "blue";
+            cSubBranches[0].style.color = "black";
+            cSubBranches[0].style.cursor = "auto";
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body onload="addEvents();">
+<ul id="LinkedList1" class="LinkedList">
+  <li>Design and Analysis of Algorithm
+    <ul>
+  <li>Asymptotic Notation and time complexity
+
+    <ul>
+      <li>Definition of Algorithm
+           <ul>
+      <li>Problem Solving Procedure</li>
+         <li> Solve well-specified problem</li>
+   <li>Problem Specification description</li>
+<li>Complete set Instances</li>
+        <li>Output Instance
+            <ul>
+<li>Sort</li>
+ <li>Input 
+        <ul>
+             <li>Sequence n keys</li>
+	</ul>
+		</li>
+	<li>Output
+	<ul>
+         <li>Permutation input sequence</li>
+              </ul>
+			</li>
+        </ul>
+</li>
+<li>Possible Input Sequence</li>
+        <li>Main Properties
+<ul> 
+    <li>Finiteness</li>
+     <li>Correctness</li>
+     <li>Robustness</li>
+</ul>
+ </li>
+         </ul>
+             </li>
+
+
+
+          <li>Algorithm Analysis
+		<ul>
+                           <li>Time Complexity
+         			 <ul>
+ 				<li>Time amount</li>
+          			<li>Input size</li>
+             			<li>Expressed Asymptotic Notation
+					<ul>
+					<li>Big O Notation
+       						<ul>
+						<li>non negative functions, f(n),g(n)</li>
+             					<li>f(n)=O(g(n))
+  							<ul>
+                     						<li>growth rate</li>
+								<li>Smaller f(n)</li>
+								<li>Bigger g(n)</li>
+                        					<li>Equal also</li>
+							</ul>
+							</li>
+                                   
+						<li>0<=f(n)<=a*g(n)</li>
+						<li>n>=b must</li>
+						<li>a,b positive</li>
+						<li>a*g(n) upper bound</li>
+            					<li>Examples
+              						 <ul>
+                  						<li>log n!=O(nlogn)</li>
+                						 <li>log n= O(n)</li>
+									</ul>
+                       							</li>
+  								</ul>
+
+								</li>
+
+  
+          <li>Big Omega notation
+		<ul>
+		<li>non negative functions, f(n),g(n)</li>
+                    <li>f(n)=Omega(g(n))</li>
+			<li>0<=a*g(n)<=f(n)</li>
+  			<li>n>=b must</li>
+                       <li>a,b positive</li>
+                         <li>a*g(n) lower bound f(n)</li>
+                         <li>Examples
+                             <ul>
+                                <li>7n^2+n=Omega(n)</li>
+                                 <li>log n!=Omega(nlogn)</li>
+                                   </ul>
+                                     </li>
+ 			<li>Gowth rate f(n)>g(n)</li>
+                          </ul>
+            </li>
+		
+
+
+          <li>Theta Notation
+            <ul>
+		<li>non negative functions, f(n),g(n)</li>
+		<li>f(n)=Theta(g(n))
+                        <ul>
+			   <li>f(n)=O(g(n))
+                              <ul>
+                                <li>f(n)<=a1*g(n)</li>
+                                </ul>
+                                 </li>
+		<li>f(n)=Omega(g(n))
+                      <ul>
+                       <li>f(n)<=a2*g(n)</li>
+                        </ul>
+                              </li>
+                                   </ul>
+                                   </li>
+ 		<li>a1,a2 constraints</li>
+                  <li>f(n)=Theta(g(n))
+                      <ul>
+                        <li>a1*g(n) upper bound f(n)</li>
+                          <li>a2*g(n) lower bound f(n)</li>
+                          </li>g(n) tight bound f(n)</li>
+                           </ul>
+                              </li>
+                       <li>Examples
+                           <ul>
+                              <li>p(n)=10n^4-50n^3+200n^2-1000n=Theta(n^4)</li>
+                               <li>3n^2-100n+6=Theta(n^2)</li>
+                                </ul>
+                                  </li>
+                                       </ul>
+                                         </li>
+
+
+             
+        <li>Little o notation
+           <ul>
+            <li>f(n)=o(g(n))</li>
+            <li>0<=f(n)<a*g(n)</li>
+             <li>n>=b must</li>
+             <li>Growth rate f(n)<g(n)</li>
+               </ul>
+                 </li>
+
+<li>Little Omega notation
+              <ul>
+               <li>f(n)=w(g(n))</li>
+               <li>0<=a*g(n)<f(n)</li>
+               <li>n>=b must</li>
+               <li>Growth f(n)>g(n)</li>
+                  </ul>
+                    </li>
+
+           
+</ul>
+      </li>  
+
+           </ul>
+             </li>
+                     
+ 	<li>Space Complexity
+	<ul>
+            <li>Space amount</li>
+               <li>Input Size</li>
+  </ul>
+	</li>
+               </ul>
+                   </li>
+
+
+          
+       
+     <li>Time Complexity Finding
+<ul>
+
+		<li>No Loop
+                   <ul>
+                     <li>No recursion</li>
+                     <li>Constant time 0(1)</li>
+                        </ul>
+                         </li>
+
+           <li>Loop
+                <ul>
+                  <li>Loop Running</li>
+                  <li>n times= O(n)
+                     <ul>
+                      <li>n input size</li>
+                       </ul>
+                        </li>
+			<li>n^2 times=O(n^2)
+                              <ul>
+                               <li>n input size</li>
+                                     </ul>
+                                       </li>
+                               </ul>
+                                 </li>
+
+
+		<li>Complexity Types
+                  <ul>
+                     <li>Worst case
+                        <ul>
+                            <li>function</li>
+                            <li>maximum steps</li>
+                            <li>instance size n</li>
+                             <li>useful</li>
+                               </ul>
+                                   </li>
+                    <li>Best case
+                        <ul>
+                          <li>function</li>
+                          <li>minimum steps</li>
+                           <li>instance size n</li>
+                                    </ul>
+                                        </li>
+
+
+                        <li>Average case
+ 				<ul>
+                               <li>function</li>
+                               <li>Average steps</li>
+                                </ul>
+                                 </li>
+                   </ul>
+                     </li>
+          </ul>
+              </li>  
+
+          <li>Calculation Time Complexity
+              <ul>
+			<li>Substitution Method
+                           <ul>
+                             <li>Value Substitution</li>
+                                  </ul>
+                                    </li>
+
+          <li>Recursion Tree Method
+                      <ul>
+                        <li>Track iterations</li>
+                        <li>Recurrence Equation</li>
+                         <li>Expand current items</li>
+                         <li>Adding current items</li>
+                         <li>Tree Comutation</li>
+                          <li>Invokating node each time</li>
+                          <li>Label each node</li>
+                          <li>Time cost incurred</li>
+                          <li>Labelling trees</li>
+                           <li>Base case cost T(0)</li>
+                            <li>Cost sum=total running time</li>
+                                 </ul>
+                                    </li>
+          <li>Variable changes
+             <ul>
+                   <li>Substituted another variable</li>
+                     <li>Solving known pattern</li>
+                     <li>Restoration original variable</li>
+                     <li>Desired results</li>
+                         </ul>
+                            </li>
+        <li>Master Theorem
+             <ul>
+             <li>solving recurrence relation</li>
+               </ul>
+               </li>
+
+        </ul>
+  </li>
+             </ul>
+               </li>
+        
+
+   
+  <li>Recursion
+    <ul>
+
+      <li>Definition of Recursion
+           <ul>
+             <li>Breaking down problem</li>
+             <li>Subproblems one/more</li>
+             <li>calls itself</li>
+             <li>Recursion cases
+			<ul>
+                        <li>Base case
+                             <ul>
+                               <li>Terminating condition</li>
+                                </ul>
+                                  </li>
+                         <li>Recursive Case
+                            <ul>
+                              <li>Breaks original pattern</li>
+                                  </ul>
+                                     </li>
+                         </ul>
+                           </li>
+              <li>General Approach
+                   <ul>
+                       <li>write function header</li>
+                        <li>Decompose problems into subproblems</li>
+                        <li>Write base case</li>
+                        <li>Write termination condition</li>
+                             </ul>
+                             </li>
+		<li>Write recursive program
+                       <ul>
+                          <li>At least one base case</li>
+                          <li>Atleast one recursive case</li>
+                          <li>Test for one base case</li>
+                          <li>Executable before recursive call</li>
+                          <li>Recursive call must</li>
+                          <li>Correct non recursive part</li>
+                            </ul>
+                            </li>
+
+
+              </ul>
+                   </li>
+          
+ 
+          <li>Types of Recursion
+        <ul>
+          <li>Direct Recursion 
+                   <ul>
+                     <li>Explicitly calling itself</li>
+                          </ul>
+                               </li>
+            <li>Indirect Recursion
+                    <ul>
+                      <li>Calls another function</li>
+                      <li>Another function calls f(x)</li>
+                          </ul>
+                            </li>
+
+          <li>Tail Recursion
+                 <ul>
+                   <li>No pending operations</li>
+                   <li>Independent number recursive calls</li>
+                   <li>Interactive process</li>
+                            </ul>
+                            </li>
+           <li>Non Tail Recursion
+                 <ul>
+                  <li>Pending operations exist</li>
+                  <li>Not independent</li> 
+                        </ul>
+                           </li>
+             <li>Linear Recursion
+                 <ul>
+                  <li>No pending operations</li>
+                  <li>Example
+                       <ul>
+                    <li>Factorial Functions</li>
+                        </ul>
+                        </li>
+                           </ul>
+                           </li>
+              <li>Tree Recursion
+                      <ul>
+                     
+                         <li>Non linear</li>
+                         <li>Pending operations exist</li>
+                         <li>Example
+                               <ul>
+                                <li>Fibonacci Functions</li>
+                                  </ul>
+                                    </li>
+                                      </ul>
+                                           </li>
+       </ul>
+      </li> 
+<li>Converting Recursive function->Tail Recursive
+                <ul>
+                     <li>Auxillary parameter
+                         <ul>
+                           <li>Form result</li>
+                               </ul>
+                                </li>
+                           <li>Incorporate pending operation</li>
+                           <li>Recursive Function
+                               <ul>
+                                 <li>No pending operation</li>
+                                      </ul>
+                                        </li>
+                     <li>Clean Syntax</li>
+                      <li>Hide auxillary Parameters</li>
+                      <li>Example
+                          <ul>
+                            <li>Fibonacci function
+                                <ul>
+                                  <li>Two auxillary parameters</li>
+                                    </ul>
+                                     </li>
+                            </ul>
+                           </li>
+                             </ul>
+                               </li>
+               
+
+
+
+                  <li>Converting Tail Recursive-> Iterative
+                        <ul>
+                            <li>Establish base case</li>
+                            <li>Truth value P(x) parameter</li>
+                            <li>Example
+                                <ul>
+                                 <li>Factorial
+                                   <ul>
+                                    <li>Fact-aux F</li>
+                                     <li>Composition x
+                                       <ul>
+                                         <li>Parameter n</li>
+                                         <li>Parameter result</li>
+                                             </ul>
+                                                </li>
+                                 <li>P(n,result)=(n==1)</li>
+                                 <li>G(n,result)=result</li>
+                                 <li>H(n,result)=(n-1,n*result)</li>
+                                 <li>P(x) true = F(x)
+                                    <ul>
+                                   <li>F(x)=G(x)</li>
+                                   <li>F(x)=H(x)</li>
+                                     </ul>
+                                         </li>
+                                        </ul>
+                                        </li>
+</ul>
+</li>
+
+
+
+                                  </ul>
+                                  </li>
+                         
+     <li>Recursion vs Iteration
+             <ul>
+                 <li>System Stack</li>
+                  <li>PUSH and POP operations</li>
+                  <li>Advantages- Recursive function
+                       <ul>
+                          <li>Code looks beautiful</li>
+                           <li>Simpler writing</li>
+                               </ul>
+                                </li>
+
+                    <li>Disadvantages-Recursive Function
+                           <ul>
+                           <li>Incur Extra Overhead</li>
+                           <li>Degraded Performance</li>
+                           <li>Slower</li>
+                           <li>Use extra memory</li>
+                  </ul>
+                    </li>
+                      </ul>
+                      </li>
+                            
+
+                        
+                  <li>Working Recursion
+                      <ul>
+                       <li>2 sperate memory area
+                             <ul>
+                     <li>Heap area</li>
+                     <li>Stack area
+                        <ul>
+                      <li>Creates stack frame</li>
+                       <li>Also called activation record</li>
+                       <li>Contain parameters</li>
+                       <li>Contain local variables</li>
+                       <li>Main function called
+                              <ul>
+                                <li>Start program</li>
+                                <li>stack bottom</li>
+                                <li>function currently executing
+                                    <ul>
+                                      <li>top of stack</li>
+                                         </ul>
+                                          </li>
+                                 <li>Other stack frames
+                                         <ul>
+                                   		<li>Wait for returning fuctions</li>
+                                                 <li>Continue executing</li>
+                                                    </ul>
+                                                      </li>
+                                   <li>function finishes
+                                            <ul>
+                                              <li>Stack frame erased</li>
+                                              <li>Local variable erased</li>
+                                                  </ul>
+                                                    </li>
+                                   <li>Recursive functions
+                                          <ul>
+                                            <li>Holds 2 or more stack frames</li>
+					    <li>top one accessed</li>
+                                            <li>New stack frame pushed
+                                                     <ul>
+                                                      <li>With each recursive call</li>
+                                                        </ul>
+                                                        </li>
+
+
+                                            <li>Stack frame popped</li>
+                                            <li>return value if any
+                                                 <ul>
+                                                   <li>at stack top</li>
+                                                      </ul>
+                                                      </li>
+                                                             </ul>
+                                                            </li>
+                  </ul>
+                  </li> 
+                         
+                                  
+</ul>
+                  </li> 
+                         
+                           
+<li>Binary Search
+<ul>
+<li>Searchiing elements x</li>
+<li>Sorted array a[]</li>
+<li>index i</li>
+<li>a[i]=x or non existent</li>
+<li>Procedure
+         <ul>
+               <li>a[low]<=x<=a[high]</li>
+               <li>mid=(high+low)/2</li>
+               <li>if x=a[mid]
+                      <ul>
+                        <li>return mid</li>
+                         </ul>
+                         </li>
+               
+               <li>if x >=a[mid]
+                      <ul>
+                        <li>Search range (mid+1) -->high</li>
+                              </ul>
+                                </li>
+
+                       <li>if x < a[mid]
+
+                        <ul>
+                      <li>Search range low -->(mid-1)</li>
+                        </ul>
+                          </li>
+                <li>Complexity
+                    <ul>
+                       <li>O(log n)</li>
+                       <li>Unsorted array</li>
+                           </ul>
+                            </li>
+
+                                   </ul>
+                                   </li>
+
+           
+</ul>
+</li>
+             </ul>
+             </li>
+                       </ul>
+                        </li>
+       <li>Tower of Hanoi
+
+<ul>
+<li>Puzzle</li>
+<li>Three pegs</li>
+<li>Several disks</li>
+<li>Initially stacked</li>
+<li>Largest to smallest</li>
+<li>Left peg</li>
+      <li>Rules
+               <ul>
+               <li>move entire tower --->middle peg</li>
+                <li>One disk only</li>
+                <li>Smaller disk on top must</li>
+                    </ul>
+                    </li>
+ <li>Recurse largest disk</li>
+<li>One peg moved(source)</li>
+ <li>Another peg moved(destination)</li>
+ <li>Third peg moved(spare)</li>
+  <li>Complexity
+        <ul>
+             <li> O(2^n)</li>
+             <li>Exponential time complexity</li>
+             <li>Computationally expensive</li>
+             <li>Hard writing iteratively</li>
+                 </ul>
+                  </li>
+
+</ul>
+</li> 
+</ul> 
+ </li>
+
+<li>Heap or priority queue
+    <ul>
+       <li>Definition
+            <ul>
+         <li>Data structure</li>
+         <li>Supports two basic operations
+            <ul>
+              <li>Insert new item</li>
+              <li>Remove minimum or maximum item</li>
+                    </ul>
+                       </li>
+          <li>Binary Heap
+               <ul>
+                <li>Classic method</li>
+                <li>Implement priority queue</li>
+                          </ul>
+                            </li>
+          <li>Properties Heap
+                <ul>
+                   <li>Structure property
+                        <ul>
+                          <li>Complete binary tree</li>
+                          <li>Represented as array</li>
+                          <li>Completely filled up</li>
+                          <li>Possible exception --->bottom most level
+                                          <ul>
+                                            <li>Filled from left --->right</li>
+                                                  </ul>
+                                                  </li>
+                                                    </ul>
+                                                     </li>
+                            
+                       <li>Ordering property
+                             <ul>
+                              <li>Every node denoted X</li>
+                              <li>Parent p</li>
+                              <li>key p<=X</li>
+                              <li>Minimum element = root(must)
+                                       <ul>
+                                          <li>min-heap</li>
+                                               </ul>
+                                                  </li>
+                              <li>Maximum element = root(must)
+                                             <ul>
+                                               <li>max-heap</li>
+                                                     </ul>
+                                                     </li>
+                                                          </ul>
+                                                            </li>
+
+                            </ul>
+                           </li>
+                                        </ul>
+                                      </li>
+                  <li>Representation
+                         <ul>
+                          <li>Represented array A</li>
+                          <li>Attributes A
+                                <ul>
+                                  <li>Length=array size</li>
+                                   <li>Heap size=number of elements</li>
+                                   <li>Length>=heapsize</li>
+                                   <li>Heap root=A(1)</li>
+                                   <li>Parent(i)=A(1/2)</li>
+                                   <li>Left child(i)=A(2i)</li>
+                                   <li>Right child(i)=A(2i+1)</li>
+                                    <li>if i=1
+                                           <ul>
+                                               <li>no parent</li>
+                                                   </ul>
+                                                   </li>
+                                     <li>if 2i>n
+                                              <ul>
+                                                <li>Left child doesn't exist</li>
+                                                   </ul>
+                                                      </li>
+                                     <li>if 2i+1>n
+                                                <ul>
+                                                    <li>Right child doesn't exist</li>
+                                                               </ul>
+                                                                 </li>
+                                                   </ul>
+                                                    </li>
+                                                       </ul>
+                                                       </li>
+                                                    
+
+
+                                       <li>Basic operations
+                                                   <ul>
+                                                     <li>Heapify
+                                                          <ul>
+                                                             <li>Array A[]</li>
+                                                             <li>heapsize n</li>
+                                                             <li>make i
+                                                                  <ul>
+                                                                        <li>i --> subtree root</li>
+                                                                             </ul>
+                                                                               </li>
+                                                                                 </ul>
+                                                                                   </li>
+                                                      <li>Build Heap
+                                                           <ul>
+                                                               <li>create heap
+                                                                    <ul>
+                                                                        <li>unordered input array</li>
+                                                                              </ul>
+                                                                                </li>
+                                                                               <li>start from trees</li>
+                                                                            </ul>
+                                                                            </li>
+                                  <li>Heap Sort
+                                            <ul>
+                                              <li>sorts array</li>
+                                                    </ul>
+                                                 </li>
+                                                       <li>Extract
+                                                           <ul>
+                                                             <li>root</li>
+                                                             <li>max heap</li>
+                                                             <li>min heap</li>
+                                                                      </ul>
+                                                                             </li>
+                                         <li>Insert
+                                              <ul>
+                                               <li>create hole</li>
+                                               <li>new element x placed</li>
+                                               <li>no violation heap property</li>
+                                                <li>percolate up method
+                                                       <ul>
+                                                         <li>bubble up hole</li>
+                                                          <li>towards root</li>
+                                                          <li>sliding element</li>
+                                                          <li>hole's parent down</li>
+                                                           <li>continue till X in hole</li>
+                                                             </ul>
+                                                                 </li>
+                                                         
+
+                                  </ul>
+                                   </li>
+                                                             
+                                         <li>Extracting maximum
+                                            <ul> 
+                                                <li>Max element from Max Heap</li>
+                               			<li>Extract root</li>
+							</ul>
+                                                          </li>
+                                                                          </ul>
+     										</li>
+                    <li>Analysis of Heap Operations
+                      <ul> 
+                         <li>Heapify Complexity
+                             <ul> 
+                                <li>O(h)=O(log2 n)</li>
+				      </ul>
+					</li>
+                          <li>Insert Complexity
+                            <ul>
+                               <li>O(h)=(log n)</li>
+                               <li>Time complexity depends on height</li>
+					</ul>
+                                        </li>
+                          <li>Delete or Extract Maximum Complexity
+                                <ul>
+                                   <li>O(log2 n)</li>
+                                         </ul>
+                                          </li>
+                  
+                           <li>Analysis of Build Heap
+                                  <ul>
+                                     <li>O(nlogn)</li> 
+                                       <li>Can get tight result
+                                             <ul>
+                                               <li>Linear in time</li>
+                                               <li>O(n)</li>
+                                                  </ul> 
+                                                    </li>
+                                                         </ul>
+                                                           </li>
+
+                                                                    </ul>
+                                                                    </li>
+
+                                 <li>Heap Sort
+                                     <ul> 
+                                        <li>Priority Queue 
+                                            <ul> 
+                                                <li>Sort n items</li> 
+                                                <li>Inserting every item
+                                                    <ul>
+                                                        <li>Binary tree</li>
+                                                             </ul>
+                                                                   </li>
+                                                 <li>Extracting item</li>
+                                                 <li>Calling Algorithm
+                                                     <ul>
+                                                       <li>Delete max</li>
+                                                       <li>Delete min</li>
+                                                           </ul>
+                                                             </li>
+                                                      <li>Using Heap
+                                                            <ul>
+                                                               <li>Max Heap</li>
+                                                                <li>Min Heap</li>
+                                                                 <li>n times</li>
+                                                                          </ul>
+                                                                          </li>
+                                                       <li>Heapsort
+                                                               <ul>
+                                                                  <li>Loop
+                                                                      <ul> 
+                                                                          <li>Swap()</li>
+                                                                          <li>Heapify</li>
+                                                                                    </ul>
+                                                                                     </li>
+                                                                 <li>O(n log n)</li>
+                                                                          </ul>
+                                                                             </li>
+                                                                                  </ul>
+                                                                                   </li>
+
+                                                                 <li>Implementation Issues
+                                                                          <ul>
+                                                                      <li>List
+                                                                         <ul>
+                                                                           <li>Expensive to search</li>
+										</ul>
+                                                                               </li>
+                                                                       <li>Sorted list
+                                                                            <ul>
+                                                                              <li>Expensive
+                                                                                         <ul>
+                                                                                           <li>Add</li>
+                                                                                           <li>Remove</li>
+                                                                                                 </ul>
+                                                                                                     </li>
+                                                                                           </ul>
+                                                                                           </li>
+                                                                      <li>Binary Search Tree
+                                                                           <ul>
+                                                                             <li>Trees
+                                                                                 <ul>
+                                                                                   <li>Could be unbalanced</li>
+                                                                                    <li>Unrandom input</li>
+                                                                                            </ul>
+                                                                                                  </li>
+                                                                                                             </ul>
+                                                                                                                  </li>
+                                                                                                                        </ul>
+                                                                                                                          </li>
+                                                                                                      </ul>
+                                                                                                        </li>
+                                                                                                           </ul>
+                                                                                                          </li>
+                 <li>Graph Traversal
+                        <ul>
+                           <li>Definition
+                                 <ul>
+                                    <li>Starts
+                                          <ul>
+                                             <li>Arbitary vertex</li>
+                                                  </ul>
+                                                   </li>
+                                            <li>Visits
+                                                <ul>
+                                                  <li>All vertex</li>
+                                                        </ul>
+                                                            </li>
+                                             <li>Two Types
+                                                 <ul>
+                                                     <li>Depth First Search</li>
+                                                      <li>Breadth First Search</li>
+                                                          </ul>
+                                                              </li>
+                                                                      </ul>
+                                                                       </li>
+                                   <li>Depth First Search
+                                          <ul>
+                                              <li>Start from vertex u</li>
+                                               <li>u as visited</li>
+                                               <li>Add to R</li>
+                                               <li>Each Edge(uv)
+                                                   <ul>
+                                               <li>Incident to u</li>
+                                                      </ul>
+                                                      </li>
+                                               <li>v not visited
+                                                      <ul>
+                                                          <li>DFS(v)</li>
+                                                          <li>Return R</li>
+                                                                </ul>
+                                                                  </li>
+                                               <li>Edge Classification
+                                                  <ul>
+                                                       <li>Tree Edge</li>
+                                                        <li>Back Edge</li>
+                                                        <li>Forward Edge</li>
+                                                        <li>Cross Edge</li>
+                                                                 </ul>
+                                                                 </li>
+                                                 <li>Time Stamps
+                                                      <ul>
+                                                       <li>Discovery time
+                                                            <ul>
+                                                               <li>See Vertex</li>
+                                                               <li>First time</li>
+                                                                   </ul>
+                                                                    </li>
+                                                        <li>Finish Time
+                                                            <ul>
+                                                             <li>See Vertex</li>
+                                                             <li>Last time</li>
+                                                                      </ul>
+                                                                        </li>
+                                                                             </ul>
+                                                                            </li>
+                                                     <li>Application of DFS
+                                                         <ul>
+                                                             <li>Topological ordering
+                                                                   <ul>
+                                                                      <li>Select vertex
+                                                                              <ul>
+                                                                                 <li>degree 0</li>
+                                                                                     </ul>
+                                                                                         </li>
+                                                                       <li>Add vertex to Output list P</li>
+                                                                        <li>Delete 
+                                                                             <ul>
+                                                                               <li>Vertex</li>
+                                                                               <li>All Edges</li>
+                                                                                    </ul>
+                                                                                    </li>
+                                                                         <li>Return</li>
+                                                                               </ul>
+                                                                                    </li>
+
+                                                                <li>Strongly Connected Components
+                                                                        <ul>
+                                                                          <li>Call DFS</li>
+                                                                          <li>Compute finishing time</li>
+                                                                           <li>Compute Transpose</li>
+                                                                           <li>Perform DFS</li>
+                                                                            <li>Output</li>
+                                                                                </ul>
+                                                                                  </li>
+                                                                  <li>DFS Cycle
+                                                                      <ul>
+                                                                           <li>Back Edge
+                                                                               <ul>
+                                                                                 <li>Has cycle</li>
+                                                                                           </ul>
+												</li>
+                                                                                                     </ul>
+                                                                                                      </li>
+                                                                     <li>Finding articulation point
+                                                                      <ul>
+                                                                        <li>Start any vertex</li>
+                                                                         <li> Perform DFS</li>
+                                                                          <li>Number visited vertices</li>
+                                                                           <li>Define low(v)=Minimum</li>
+                                                                           <li>Articulation Point
+                                                                               <ul>
+                                                                                <li>Root
+                                                                                   <ul>
+                                                                                     <li>More than one child</li>
+                                                                                                     </ul>
+                                                                                                          </li>
+                                                                                  <li>Node
+                                                                                     <ul>
+                                                                                        <li>Some child</li>
+                                                                                         <li>low>=Num(v)</li>
+                                                                                                 </ul>
+                                                                                                  </li>
+                                                                                                         </ul>
+                                                                                                            </li>
+                                                                                                           </ul>
+                                                                                                           </li>
+                                                                                                                     </ul>
+                                                                                                                         </li> 
+                                                                                                                         </ul>
+                                                                                                                         </li>
+                                             <li>Breadth First Search(BFS)
+                                               <ul>
+                                                   <li>Enqueue starting vertex</li>
+                                                   <li>Queue not empty</li>
+                                                   <li>Dequeue a vertex</li>
+                                                   <li>Visit v</li>
+                                                    <li>Enqueue</li>
+                                                    <li>Performance
+                                                      <ul>
+                                                         <li>O(V^2)</li>
+                                                                 </ul>
+                                                                     </li>
+                                                              <li>Edge Classifiation
+                                                                      <ul>
+                                                                         <li>Undirected Graph
+                                                                                <ul>
+                                                                                   <li>Tree Edges</li>
+                                                                                   <li>Cross Edge</li>
+                                                                                         </ul>
+                                                                                         </li>
+                                                                          <li>Directed Graph
+                                                                                <ul>
+                                                                          <li>Tree Edge</li>
+                                                                          <li>Cross Edge</li>
+                                                                          <li>Back Edge</li>
+                                                                          <li>No forward Edge</li>
+
+                                                                                </ul>
+                                                                                 </li>
+                                                                                   </ul>
+                                                                                   </li>
+                                                               <li>Application
+                                                                     <ul>
+                                                                          <li>Graph cycle or not</li>
+                                                                          <li>Determine joining path</li>
+                                                                          <li>Graph connected or not</li>
+                                                                                     </ul>
+                                                                                     </li>
+                                                                                      </ul>
+                                                                                      </li>
+                                                                                                  </ul>
+                                                                                                  </li>
+
+                                                    <li>Divide and Conquer
+                                                       <ul>
+                                                         <li>Divide
+                                                              <ul>
+                                                               <li>Breaking problem</li>
+                                                                </ul>
+                                                                  </li>
+
+
+                                                                <li>Conquer
+                                                                       <ul>
+                                                                    <li>Solving problems</li>
+                                                                            </ul>
+                                                                            </li>
+
+                                                                 <li>Combine
+                                                                       <ul>
+                                                                           <li>Collecting subproblems</li>
+                                                                                    </ul>
+                                                                                    </li>
+
+                                                                  <li>Time Complexity
+                                                                          <ul>
+                                                                             <li>O(log n)</li>
+                                                                                </ul>
+                                                                                </li>
+                                                                  <li>Linear Saerch
+                                                                        <ul>
+                                                                          <li>O(n)</li>
+                                                                               </ul>
+                                                                               </li>
+
+                                                                  <li>Binary Search
+                                                                      <ul>
+                                                                          <li>O(log n)</li>
+                                                                             </ul>
+                                                                  </li>
+
+                                                                  <li>Multiplication of two integers
+                                                                       <ul>
+                                                                            <li>O(n^2)</li>
+                                                                                   </ul>
+                                                                                    </li>
+                                                                  <li>Finding max and min
+                                                                          <ul>
+                                                                                <li>O(n)</li>
+                                                                                  </ul>
+                                                                                      </li>
+                                                             <li>Quick Sort
+                                                                      <ul>
+                                                                           <li>Divide
+                                                                                  <ul>
+                                                                                     <li>Array S</li>
+                                                                                      <li>x as pivot</li>
+                                                                                      <li>Break S
+                                                                                          <ul>
+                                                                                             <li>L holds element < x</li>
+                                                                                             <li>E holds element = x </li>
+                                                                                             <li>G holds element > x </li>
+                                                                                                              </ul>
+                                                                                                               </li>
+                                                                                                                     </ul>
+                                                                                                                            </li>
+                                                                          <li>Conquer
+                                                                               <ul>
+                                                                                 <li>Recursively Sort 
+                                                                                   <ul>
+                                                                                        <li>L</li>
+                                                                                        <li>G</li>
+                                                                                            </ul>
+                                                                                                  </li>
+                                                                                                  </ul>
+                                                                                                     </li>
+                                                                          <li>Combine
+                                                                                  <ul>
+                                                                                      <li>Put elements in S
+                                                                                          <ul>
+                                                                                              <li>Put L</li>
+                                                                                               <li>Put G</li>
+                                                                                               <li>Put E</li>
+                                                                                                       </ul>
+                                                                                                        </li>
+                                                                                                               </ul>
+                                                                                                               </li>
+                                                                            <li>Other choice of pivot
+                                                                                <ul>
+                                                                                    <li>Random</li>
+                                                                                    <li>Median of three</li>
+                                                                                           </ul>
+                                                                                           </li>
+
+                                                                           <li>Time Complexity
+                                                                               <ul>
+                                                                                  <li>Worst Case
+                                                                                      <ul>
+                                                                                         <li>O(n^2)</li>
+                                                                                               </ul>
+                                                                                               </li>
+                                                                                  <li>Best Case
+                                                                                      <ul>
+                                                                                            <li>O(n logn)</li>
+                                                                                                 </ul>
+                                                                                                   </li>
+                                                                                  <li>Average Case
+                                                                                          <ul>
+                                                                                              <li>O(n log n)</li>
+                                                                                                       </ul>
+                                                                                                       </li>
+                                                                                                                  </ul>
+                                                                                                                  </li>
+                                                                                                                           </ul>
+                                                                                                                           </li>
+                                                     <li>Merge Sort
+                                                              <ul>
+                                                                     <li>Two step
+                                                                         <ul>
+                                                                          <li>Divide array</li>
+                                                                      <li>Merge two sorted array</li>
+                                                                      <li>Make a single sorted array </li>
+                                                                                </ul>
+                                                                                 </li>
+                                                                     <li>Time complexity
+                                                                            <ul>
+                                                                                 <li>O(n log n) </li>
+                                                                                       </ul>
+                                                                                        </li>
+                                                                                           </ul>
+                                                                                           </li>
+                                                        <li>Strassen's Matrix Multiplication
+                                                                 <ul>
+                                                                    <li>2*2 multiplication</li>
+                                                                    <li>7 multiplication</li>
+                                                                    <li>18 add and substract</li>
+                                                                    <li>Time Complexity
+                                                                         <ul>
+                                                                            <li>0(n^2.807)</li>
+                                                                                     </ul>
+                                                                                      </li>
+                                                                                        </ul>
+                                                                                         </li>
+
+                                                                                               </ul>
+                                                                                               </li>
+
+                                                      <li>Union Find Algorithm
+                                                              <ul>
+                                                                   <li>Basic Operations
+                                                                     <ul>
+                                                                          <li>Makeset
+                                                                                 <ul>
+                                                                                      <li>New Set</li>
+                                                                                             </ul>
+                                                                                              </li>
+                                                                          <li>Union
+                                                                               <ul>
+                                                                                   <li>Merge two sets into one </li>
+                                                                                            </ul>
+                                                                                                   </li>
+                                                                         <li>Time complexity
+                                                                                <ul>
+                                                                                     <li>O(n)</li>
+                                                                                           </ul>
+                                                                                               </li>
+
+                                                                                                </ul>
+                                                                                                    </li>
+                                                                <li>Union by height
+                                                                         <ul>
+                                                                            <li>O(log n)</li>
+                                                                                    </ul>
+                                                                              </li>
+                                                                <li>Path Compression</li>
+                                                                <li>Union By Weight
+                                                                          <ul>
+                                                                <li>O(log n)</li>
+                                                                             </ul>
+                                                                                   </li>
+                                                                 <li>Application of Union 
+                                                                     <ul>
+                                                                            <li>Finding Minimum Spanning Tree</li>
+                                                                            <li>Finding connected components</li>
+                                                                                          </ul>
+                                                                                                  </li>
+
+                                                                                                          </ul>
+                                                                                                          </li>
+                                                        <li>Greedy Algorithm
+                                                                   <ul>
+                                                                        <li>Definition
+                                                                              <ul>
+                                                                                 <li>Solve Optimization Problem</li>
+                                                                                            </ul>
+                                                                                               </li>
+                                                              <li>Two properties
+                                                                          <ul>
+                                                                             <li>Greedy Choice </li>
+                                                                              <li>Optimal Substructure</li>
+                                                                                                </ul>
+                                                                                                 </li>
+                                                              <li>Use Greedy Method
+                                                                    <ul>
+                                                                        <li>Problem assigned numerically</li>
+                                                                        <li>Global optimum</li>
+                                                                        <li>Incremental solution</li>
+                                                                        <li>Intermmediate step</li>
+                                                                                   </ul>
+                                                                                      </li>
+                                                              <li>Disadvantage
+                                                                              <ul>
+                                                                                    <li>Slow</li>
+                                                                                    <li>Algorithm must be correct</li>
+                                                                                           </ul>
+                                                                                            </li>
+                                                              <li>Minimum Spanning Tree
+                                                                       <ul>
+                                                                             <li>Kruskal Algorithm
+                                                                                  <ul>
+                                                                                        <li>Connected Graph</li>
+                                                                                        <li>Sort edges(e)</li>
+                                                                                        <li>Minimum weight edge</li>
+                                                                                        <li>No cycle</li>
+                                                                                        <li>Time Complexity
+                                                                                                <ul>
+                                                                                                   <li>0(eloge)</li>
+                                                                                                           </ul>
+                                                                                                                   </li>
+                                                                                                                        </ul>
+                                                                                                                         </li>
+
+                                                                              <li>Prim's Algorithm
+                                                                                    <ul>
+                                                                                        <li>Single vertex</li>
+                                                                                        <li>Fewer n vertices</li>
+                                                                                        <li>Find smallest edge</li>
+                                                                                        <li>Add edge</li>
+                                                                                           <li>Time Complexity
+                                                                                                <ul>
+                                                                                                   <li>0(ne)</li>
+                                                                                                           </ul>
+                                                                                                              </li>
+                                                                                                </ul>
+                                                                                                     </li>
+                                                                                                                </ul>
+                                                                                                                </li>
+                                                                                          <li>Dijkstra Algorithm
+                                                                                                   <ul>
+                                                                                                    <li>Single SHortest Path</li>
+                                                                                                    <li>Worst Case - O(n^2)</li>
+                                                                                                    <li>Pitfalls
+                                                                                                          <ul>
+                                                                                                             <li>Negative Edge Weight</li>
+                                                                                                                     </ul>
+                                                                                                                           </li>
+                                                                                                                                 </ul>
+                                                                                                                                 </li>
+
+                                                                                                  <li>Knapsack Problem
+                                                                                                        <ul>
+                                                                                                    <li>Combinatorial Optimization</li>
+                                                                                                    <li>Kinds of Knapsack
+                                                                                                             <ul>
+                                                                                                                 <li>0-1 Knapsack
+                                                                                                                      <ul>
+                                                                                                <li>May not be broken</li>
+                                                                                                <li>Decide take an item</li>
+                                                                                                <li>Decide to leave an item</li>
+                                                                                                <li>Not be efficiently solved</li>
+                                                                                                             </ul>
+                                                                                                                   </li>
+                                                                                                    <li>Fractional Knapsack
+                                                                                                          <ul>
+                                                                                                      <li>Fractions of items</li>
+                                                                                                      <li>Items can broken</li>
+                                                                                                      <li>Easy solve</li>
+                                                                                                           </ul>
+                                                                                                           </li>
+                                                                                                    <li>Time complexity
+                                                                                                       <ul>
+                                                                                                      <li>O(n log n)</li>
+                                                                                                               </ul>
+                                                                                                               </li>
+                                                                                                                      </ul>
+                                                                                                                      </li>
+                                                                                                                               </ul>
+                                                                                                                               </li>
+                                                                <li>Job Sequencing with Deadline
+                                                                      <ul>
+                                                                      <li>N jobs processed</li>
+                                                                      <li>One machine is available</li>
+                                                                      <li>Feasible solution</li>
+                                                                      <li>Subset of jobs</li>
+                                                                      <li>Completed within deadline</li>
+                                                                      <li>Optimal Solution</li>
+                                                                      <li>Feasible Solution</li>
+                                                                      <li>Maximum Profit value</li>
+                                                                      <li>Time Complexity
+                                                                             <ul>
+                                                                             <li>O(n^2)</li>
+                                                                                   </ul>
+                                                                                   </li>
+                                                                                          </ul>
+                                                                                          </li>
+                                                                                                   
+                                                                <li>Activity Selection 
+                                                                           <ul>
+                                                                  <li>Sort By finish</li>
+                                                                  <li>Pick first activity</li>
+                                                                  <li>Remove all activities</li>
+                                                                  <li>Recursively solve problem</li>
+                                                                  <li>Time Complexity
+                                                                            <ul>
+                                                                              <li>0(n log n)</li>
+                                                                                  </ul>
+                                                                                       </li>
+                                                                                                   </ul>
+                                                                                                   </li>
+                                                                <li>Travelling Salesman Problem
+                                                                      <ul>
+                                                                          <li>Choose start node</li>
+                                                                          <li>Consider the arcs</li>
+                                                                          <li>arcs join node</li>
+                                                                          <li>Pick minimum weight</li>
+                                                                          <li>Add to cycle</li>
+                                                                          <li>Go on until all nodes choses</li>
+                                                                          <li>Add the arc</li>
+                                                                          <li>Time Complexity
+                                                                                    <ul>
+                                                                                         <li>O(n^2*2^n)</li>
+                                                                                                 </ul>
+                                                                                                  </li>
+                                                                                       </ul>
+                                                                                            </li>
+                                                                  <li>Huffman Encoding
+                                                                              <ul>
+                                                                              <li>Prefix Code</li>
+                                                                              <li>Optimal prefix free</li>
+                                                                              <li>Take the characters</li>
+                                                                              <li>Sort increasing frequency</li>
+                                                                              <li>Vertices of trees</li>
+                                                                              <li>Take first two vertices</li>
+                                                                              <li>Insert the new vertex</li>
+                                                                              <li>Read Huffman Code</li>
+                                                                                                </ul>
+                                                                                                </li>
+                                                                                                                        </ul>
+                                                                                                                        </li>
+                                                                    <li>Dynamic Programming(DP)
+                                                                              <ul>
+                                                                                 <li>Concept of DP
+                                                                                          <ul>
+                                                                                               <li>Dynmaic
+                                                                                                   <ul>
+                                                                                                     <li>Continuous change</li>
+                                                                                                              </ul>
+                                                                                                                  </li>
+                                                                                            <li>Programming
+                                                                                                       <ul>
+                                                                                                          <li>Instructional Sequence</li>
+                                                                                                                    </ul>
+                                                                                                                     </li>
+                                                                                                        </ul>
+                                                                                                        </li>
+                                                                              <li>Features of DP
+                                                                                        <ul>
+                                                                                            <li>Optimization Problem</li>
+                                                                                            <li>Implemented Two Ways
+                                                                                                       <ul>
+                                                                                                        <li>Searching all possibilities</li>
+                                                                                                        <li>Store results</li>
+                                                                                                               </ul>
+                                                                                                                  </li>
+                                                                                        <li>Bottom up approach</li>
+                                                                                        <li>Broken into sub-problem</li>
+                                                                                        <li>Implementing Recursive Problem</li>
+                                                                                                           </ul>
+                                                                                                           </li>
+                                                                            <li>Steps of DP
+                                                                                      <ul>
+                                                                                       <li>Division of problems</li>
+                                                                                       <li>Creating table form</li>
+                                                                                       <li>Follow principle of Optimality</li>
+                                                                                       <li>Combining solution</li>
+                                                                                            </ul>
+                                                                                            </li>
+
+                                                                                <li>Implementation
+                                                                                               <ul>
+                                                                                                   <li>Chain matrix multiplication</li>
+                                                                                                   <li>All pair shortest path</li>
+                                                                                                   <li>Single Source shortest path</li>
+                                                                                                   <li>0-1 Knapsack Problem</li>
+                                                                                                   <li>Travelling Salesman Problem</li>
+                                                                                                   <li>Minimum Weight Triangulation</li>
+                                                                                                   <li>Optimal binary Search Tree</li>
+                                                                                                          </ul>
+                                                                                                          </li>
+                                                                             <li>Matrix Chain Multiplication
+                                                                                    <ul>
+                                                                                     <li>Features
+                                                                                           <ul>
+                                                                                            <li>Associative in nature</li>
+                                                                                            <li>Scalar</li>
+                                                                                            <li>Usage
+                                                                                              <ul>
+                                                                                                 <li>Compiler Design</li>
+                                                                                                 <li>Creation of database code</li>
+                                                                                                 <li>Query Optimization</li>
+                                                                                                       </ul>
+                                                                                                       </li>
+                                                                                    <li> Carried on
+                                                                                           <ul>
+                                                                                             <li>Square matrix
+                                                                                                    <ul>
+                                                                                                    <li>dimenssions must be equal</li>
+                                                                                                        </ul>
+                                                                                                        </li>
+                                                                                              <li>Non square matrix
+                                                                                                   <ul>
+                                                                                                     <li>dimensions must be equal</li>
+                                                                                                     <li>No of columns = No of rows</li>
+                                                                                                        </ul>
+                                                                                                        </li>
+                                                                                                        </ul>
+                                                                                                        </li>
+                                                                              <li>Cost Effective</li>
+                                                                                         </ul>
+                                                                                         </li>
+                                                                        <li>Algorithm
+                                                                               <ul>
+                                                                                  <li>Loop initialization</li>
+                                                                                  <li>Length of subproblem</li>
+                                                                                  <li>Splitting matrices into subinstances</li>
+                                                                                  <li>Time complexity
+                                                                                            <ul>
+                                                                                                <li>O(n^3)</li>
+                                                                                                       </ul>
+                                                                                                       </li> 
+                                                                                                             </ul>
+                                                                                                             </li>
+                                                                                                                     </ul>
+                                                                                                                     </li>
+
+                                                                      <li>All pair shortest path
+                                                                            <ul>
+                                                                                 <li>Adjacency list</li>
+                                                                                 <li>Cost Square Matrix</li>
+                                                                                 <li>Instance of minimum cost path</li>
+                                                                                 <li>Example
+                                                                                         <ul>
+                                                                                            <li>Floyd Warshall Problem
+                                                                                                      <ul>
+                                                                                                           <li>Loop Initialization</li>
+                                                                                                           <li>Loop for intermmediate vertices</li>
+                                                                                                           <li>Return Matrix</li>
+                                                                                                           <li>Time Complexity
+                                                                                                                   <ul>
+                                                                                                                     <li>O(n^3)</li>
+                                                                                                                             </ul>
+                                                                                                                              </li>
+                                                                                                               </ul>
+                                                                                                                   </li>
+                                                                                                                           </ul>
+                                                                                                                           </li>
+                                                                                                                                 </ul>
+                                                                                                                                 </li>
+                                                                            <li>Single Source Shortest Path
+                                                                                <ul>
+                                                                                    <li>Two ways
+                                                                                       <ul>
+                                                                                            <li>Dijkstra's Algorithm
+                                                                                                  <ul>
+                                                                                                       <li>Positive Weights</li>
+                                                                                                            </ul>
+                                                                                                             </li>
+                                                                                            <li>Bellman Ford Algorithm
+                                                                                                         <ul>
+                                                                                                         <li>May be negative weights</li>
+                                                                                                          <li>Algorithm
+                                                                                                               <ul>
+                                                                                                                 <li>Loop initialization</li>
+                                                                                                                 <li>Loop 1, Relaxation</li>
+                                                                                                                 <li>Loop 2, Relaxation</li>
+                                                                                                                 <li>Checking negative weight edge cycle</li>
+                                                                                                                 <li>No negatiive weight cycle</li>
+                                                                                                                 <li>Time Complexity
+                                                                                                                   <ul>
+                                                                                                                     <li>O(|V||E)</li>
+                                                                                                                              </ul>
+                                                                                                                                   </li>
+                                                                                                                                            </ul>
+                                                                                                                                            </li>
+                                                                                                                                            </ul>
+                                                                                                                                            </li>
+                                                                                                                                                </ul>
+                                                                                                                                                </li>
+                                                                                                                                                     </ul>
+                                                                                                                                                     </li>
+                                                                                                                                                      </ul>
+                                                                                                                                                      </li>
+                                                              <li>Lower Bound Theory
+                                                                      <ul>
+                                                                      <li>Definition
+                                                                          <ul>
+                                                                               <li>No algorithm>L(n)</li>
+                                                                                   </ul>
+                                                                                   </li>
+                                                                                   <li>Trivial Lower Bound
+                                                                                      <ul>
+                                                                                      <li>Count data to be read</li>
+                                                                                      <li>Data to be produced as output</li>
+                                                                                            </ul>
+                                                                                            </li>
+                                                                                    <li>Finding Lower Round
+                                                                                            <ul>
+                                                                                            <li>Decision tree model</li>
+                                                                                            <li>Adversary method
+                                                                                                  <ul>
+                                                                                                  <li>Maximize key comparisons</li>
+                                                                                                    </ul>
+                                                                                                          </li>
+                                                                                                             </ul>
+                                                                                                             </li>
+                                                                                                               </ul>
+                                                                                                               </li>
+                                                                                                                        
+                                                                    <li>Computational Complexity
+                                                                              <ul>
+                                                                            <li>Introduction
+                                                                                  <ul>
+                                                                                    <li>P
+                                                                                       <ul>
+                                                                                          <li>Set of decision problems</li>
+                                                                                          <li>Solved by deterministic algorithm</li>
+                                                                                          </ul>
+                                                                                            </li>
+                                                                                    <li>NP
+                                                                                       <ul>
+                                                                                          <li>Non-deterministic Polynomial</li>
+                                                                                          <li>Verifiable in polynomial amount of time</li>
+                                                                                             </ul>
+                                                                                    </li>
+                                                                                    <li>NP-Complete</li>
+                                                                                    <li>NP-Hard</li>
+                                                                                         </ul>
+                                                                                         </li>
+                                                                            <li>Terminologies of Algorithm
+                                                                                <ul>
+                                                                                  <li>Decision Algorithm
+                                                                                        <ul>
+                                                                                         <li>Answer yes or no</li>
+                                                                                         <li>Example
+                                                                                            <ul>
+                                                                                               <li>Linear Search</li>
+                                                                                               <li>Binary Search</li> 
+                                                                                                       </ul>
+                                                                                                        </li>
+                                                                                                         </ul>
+                                                                                                         </li>
+                                                                                      <li>Optimization Algorithm
+                                                                                             <ul> 
+                                                                                             <li>Optimum value</li>
+                                                                                             <li>Example
+                                                                                                 <ul>
+                                                                                                 <li>Prim's Algorithm</li>
+                                                                                                 <li>Krushkal's Algorithm</li>
+                                                                                                         </ul>
+                                                                                                         </li>
+                                                                                                             </ul>
+                                                                                                             </li>
+                                                                                        <li>Polynomial Complexity Algorithm
+                                                                                           <ul>
+                                                                                             <li>Worst case time complexity is polynomial</li>
+                                                                                             <li>WRT to input size</li>
+                                                                                             <li>O(n^k)</li>
+                                                                                              <li>K is independent of n</li>
+                                                                                               <li>Example
+                                                                                                      <ul>
+                                                                                                        <li>Quick Sort</li>
+                                                                                                          </ul>
+                                                                                                           </li>
+                                                                                                               </ul>
+                                                                                                               </li>
+                                                                                    <li>Exponential Complexity Algorithm
+                                                                                       <ul>
+                                                                                         <li>If input increases a small amount</li>
+                                                                                         <li>Time complexity increse huge amount</li>
+                                                                                         <li>O(n^r)</li>
+                                                                                         <li>n is input size</li>
+                                                                                             </ul>
+                                                                                             </li>
+                                                                                        <li>Deterministic Algorithm
+                                                                                            <ul>
+                                                                                            <li>Given input ----->Same output</li>
+                                                                                            <li>Example
+                                                                                                  <ul>
+                                                                                                    <li>Linear Search</li>
+                                                                                                     </ul>
+                                                                                                       </li>
+                                                                                                         </ul>
+                                                                                                         </li>
+                                                                                        <li>Non-deterministic Algorithm
+                                                                                            <ul>
+                                                                                              <li>Loop is guessing stage</li>
+                                                                                              <li>Next stage is verification stage</li>
+                                                                                              <li>Example
+                                                                                                 <ul>
+                                                                                                   <li>Hamiltonian Cycle</li>
+                                                                                                   <li>K-Clique Problem</li>
+                                                                                                   <li>Vertex Cover Problem</li>
+                                                                                                   <li>Satisfiablity Problem</li>
+                                                                                                           </ul>
+                                                                                                           </li>
+                                                                                                             </ul>
+                                                                                                             </li>  
+                                                                                                                         </ul>
+                                                                                                                         </li>
+                                                                  <li>Problems and instances
+                                                                      <ul>
+                                                                       <li>Infinite collection of inputs</li>
+                                                                        <li>Input(I) is an instance</li>
+                                                                        <li>Size of instance =no of bits</li>
+                                                                        <li>Solution(I) is a set of feasible solutions</li>
+                                                                        <li>Solution has associated value</li>
+                                                                           </ul>
+                                                                           </li>
+                                                                               
+
+                                                                      <li>Problem Reduction
+                                                                          <ul>
+                                                                            <li>Cost of solving(x)=Cost of Solving(Y)+Cost of reductions</li>
+                                                                            <li>Example
+                                                                               <ul>
+                                                                                 <li>Linear time reduction</li>
+                                                                                 <li>Linear equivalence of problems</li>
+                                                                                 <li>Polynomial Time Reduction</li>
+                                                                                           </ul>
+                                                                                           </li>
+                                                                                                    </ul>
+                                                                                                    </li>
+                                                                                                          </ul>
+                                                                                                          </li>
+
+
+                                                                        <li>Approximation Algorithm
+                                                                           <ul>
+                                                                             <li>Introduction
+                                                                                 <ul>
+                                                                                  <li>Heuristics
+                                                                                    <ul>
+                                                                                      <li>Polynomial time for small instance</li>
+                                                                                      <li>Not feasible ---->Problem size large</li>
+                                                                                         </ul>
+                                                                                          </li>
+                                                                                  <li>Average Case Analysis
+                                                                                      <ul>
+                                                                                        <li>Expected perforamce over some specified distribution</li>
+                                                                                           </ul>
+                                                                                            </li>
+                                                                        <li>General Optimization problem
+                                                                           <ul>
+                                                                             <li>Use branch and bound</li>
+                                                                             <li>Use Genetic Algorithms</li>
+                                                                             <li>Use Neural nets</li>
+                                                                                 </ul>
+                                                                                   </li>
+                                                                        <li>Approximation Algorithm
+                                                                           <ul>
+                                                                             <li>Find Polynomial Time approximation</li>
+                                                                             <li>Fast</li>
+                                                                             <li>Not produce optimal solution</li>
+                                                                                </ul>
+                                                                                 </li>
+                                                                                      </ul>
+                                                                                      </li>
+
+
+                                                                        <li>Performance of Approximation Algorithm
+                                                                           <ul>
+                                                                              <li>Returns a legal solution</li>
+                                                                              <li>Not cost optimal</li>
+                                                                                 </ul>
+                                                                                 </li>
+
+
+                                                                                 <li>Two types of Approximation
+                                                                                   <ul>
+
+                                                                        <li>Absolute Approximations
+                                                                            <ul>
+                                                                              <li>Minimization Problem</li>
+                                                                                 </ul>
+                                                                                 </li>
+
+                                                                          <li>Relative Approximations</li>
+                                                                               </ul>
+                                                                               </li>
+                                                                        <li>Approximation Algorithm for Vertex Cover
+                                                                            <ul>
+                                                                               <li>Time Complexity
+                                                                                  <ul>
+                                                                                    <li>0(E)</li>
+                                                                                    <li>E is edge</li>
+                                                                                       </ul>
+                                                                                        </li>
+                                                                                <li>Algorithm Steps
+                                                                                    <ul>
+                                                                                    <li>Find maximal Matching</li>
+                                                                                    <li>Return set of end points of all edges</li>
+                                                                                       </ul>
+                                                                                        </li>
+                                                                                            </ul>
+                                                                                            </li>
+                                                                                            </ul>
+                                                                                            </li>
+                                                                            <li>BackTracking
+                                                                                    <ul>
+                                                                                      <li>Basic Idea
+
+                                                                                      <ul>
+                                                                                       <li>Solve problems which has a sequence of objects</li>
+                                                                                       <li>Sequence satisfies some criterion</li>
+                                                                                        <li>Modified depth first search tree</li>
+                                                                                        <li>Involves tree search</li>
+                                                                                        <li>Each node is promising</li>
+                                                                                                 </ul>
+                                                                                                 </li>
+                                                                                        <li>Algorithm
+                                                                                           <ul>
+                                                                                             <li>Explore Node N
+                                                                                                <ul>
+                                                                                                  <li>If N=goal node
+                                                                                                    <ul>
+                                                                                                     <li>Success</li>
+                                                                                                       </ul>
+                                                                                                        </li>
+                                                                                                  <li>If N=leaf node
+                                                                                                     <ul>
+                                                                                                      <li>Failure</li>
+                                                                                                         </ul>
+                                                                                                         </li>
+                                                                                                    <li>For each child C of N
+                                                                                                       <ul>
+                                                                                                       <li>Explore C</li>
+                                                                                                          </ul>
+                                                                                                          </li>
+                                                                                                    <li>If C = Successful
+                                                                                                       <ul>
+                                                                                                         <li>Return Failure</li>
+                                                                                                            </ul>
+                                                                                                            </li>
+                                                                                                               </ul>
+                                                                                                               </li>
+                                                                                                                  </ul>
+                                                                                                                  </li>
+                                                                                                                  
+                                                                                            <li>N-queens
+                                                                                               <ul>
+                                                                                                 <li>No two queens can attack each other</li>
+                                                                                                    </ul>
+                                                                                                    </li>
+                                                                                            <li>Graph K-coloring
+                                                                                                 <ul>
+                                                                                                 <li>Assigning colors to the vertices of undirected graph</li>
+                                                                                                  <li>No two adjacent vertices are assigned same color</li>
+                                                                                                  <li>Time Complexity
+                                                                                                     <ul>
+                                                                                                       <li>O(k^n)</li>
+                                                                                                         </ul>
+                                                                                                         </li>
+                                                                                                             </ul>
+                                                                                                             </li>
+                                                                                        <li>Hamiltonian Cycle
+                                                                                           <ul>
+                                                                                             <li>Cycle that passes through every vertex only once</li>
+                                                                                              </ul>
+                                                                                              </li>
+                                                                                          <li>Branch and Bound
+                                                                                              <ul>
+                                                                                                <li>State space tree to solve the problem</li>
+                                                                                                <li>Much Slower</li>
+
+                                                                                                  </ul>
+                                                                                                   </li>
+                                                                                                      </ul>
+                                                                                                      </li>
+
+
+
+
+
+
+
+
+
+                                                                                                     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                 
+                                                         
+
+
+
+            
+                       
+                                      
+                                                              
+                                           
+                                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+</body>
+</html>
